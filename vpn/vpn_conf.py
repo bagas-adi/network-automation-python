@@ -1,7 +1,9 @@
 import getpass
 import sys
 import telnetlib
-tn = ""
+import os
+os.system("stty erase '^H'")
+
 def crypto_isakmp(ip_dst,nama_key="vpnxyz",nama_network="jkt-sby",nama_crypto_map="vpn-ngn"):
 	tn.write("conf t\n") #configuration mode
 	tn.write("crypto isakmp policy 1\n")
@@ -38,6 +40,9 @@ def auth_login(user,password):
 	if password:
 	    tn.read_until("Password: ")
 	    tn.write(password + "\n")
+	    return true
+	else :
+		return false
 if __name__ == "__main__":
 	print("==========================================")
 	print("Welcome to 'VPN app configuration' !")
@@ -50,35 +55,36 @@ if __name__ == "__main__":
 	if target_telnet != "":
 		global tn 
 		tn = telnetlib.Telnet(target_telnet)
-		auth_login(user,password)
-		print("Login Success!")
-		#user mode
-		tn.write("enable\n")
-		tn.write("cisco\n")
+		login = auth_login(user,password)
+		if login :
+			print("Login Success!")
+			#user mode
+			tn.write("enable\n")
+			tn.write("cisco\n")
 
-		#input after login 
-		print("")
-		print("Access-list Configuration ==========================================")
-		network_ip_src = raw_input("Enter Network IP Source (example 10.10.1.0): ")
-		network_wcard_src = raw_input("Enter Network Wildcard Source (example 0.0.0.255): ")
-		network_ip_dst = raw_input("Enter Network IP Destination (example 10.30.1.0): ")
-		network_wcard_dst = raw_input("Enter Network Wildcard Destination (example 0.0.0.255): ")
-		print("")
-		print("Crypto & Gateway Configuration ==========================================")
-		iface = raw_input("Enter Your interface as VPN Gateway (fa0/0): ") 
-		nama_network = raw_input("Enter Network Name (jkt-sby): ") 
-		peer_ip_dst = raw_input("Enter your peer router's IP (example 192.168.1.2): ") 
-		network_subnet_dst = raw_input("Enter your peer router's subnet (example 255.255.255.0): ") 
+			#input after login 
+			print("")
+			print("Access-list Configuration ==========================================")
+			network_ip_src = raw_input("Enter Network IP Source (example 10.10.1.0): ")
+			network_wcard_src = raw_input("Enter Network Wildcard Source (example 0.0.0.255): ")
+			network_ip_dst = raw_input("Enter Network IP Destination (example 10.30.1.0): ")
+			network_wcard_dst = raw_input("Enter Network Wildcard Destination (example 0.0.0.255): ")
+			print("")
+			print("Crypto & Gateway Configuration ==========================================")
+			iface = raw_input("Enter Your interface as VPN Gateway (fa0/0): ") 
+			nama_network = raw_input("Enter Network Name (jkt-sby): ") 
+			peer_ip_dst = raw_input("Enter your peer router's IP (example 192.168.1.2): ") 
+			network_subnet_dst = raw_input("Enter your peer router's subnet (example 255.255.255.0): ") 
 
-		nama_key =  raw_input("Enter VPN Key Name (vpnxyz): ") 
-		nama_crypto_map =  raw_input("Enter Crypto Map Name (vpn-ngn): ") 
+			nama_key =  raw_input("Enter VPN Key Name (vpnxyz): ") 
+			nama_crypto_map =  raw_input("Enter Crypto Map Name (vpn-ngn): ") 
 
-		#configuration
-		nacl(network_ip_src,network_wcard_src,network_ip_dst,network_wcard_dst,nama_network)
-		crypto_isakmp(peer_ip_dst,nama_key,nama_network,nama_crypto_map)
-		vpn_gateway(iface,network_ip_dst,network_subnet_dst,peer_ip_dst,nama_crypto_map)
+			#configuration
+			nacl(network_ip_src,network_wcard_src,network_ip_dst,network_wcard_dst,nama_network)
+			crypto_isakmp(peer_ip_dst,nama_key,nama_network,nama_crypto_map)
+			vpn_gateway(iface,network_ip_dst,network_subnet_dst,peer_ip_dst,nama_crypto_map)
 
-		tn.write("exit\n")
+			tn.write("exit\n")
 
-		print tn.read_all()
+			print tn.read_all()
 
