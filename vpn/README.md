@@ -1,10 +1,11 @@
 # VPN
 ## Introduction
 <p>The purpose of this project is <strong>to connect 2 private network using VPN via Public Network</strong>. Private network is not routed in Public Network, to connect the private networks VPN is needed. The VPN will be configured using python from NetworkAutomation PC.</p>
+<p>STEP : </p>
 <ol>
 <li>R2 must be connected to R1 and R3</li>
 <li>R3 must be connected to R2 and R3</li>
-<li>R3 is a representation of Public Network Router that does not route to any private networks</li>
+<li>R1 is a representation of Public Network Router that does not route to any private networks</li>
 <li>R2 is configured with VPN to connect to R3 private networks</li>
 <li>R3 is configured with VPN to connect to R2 private networks</li>
 <li>Check the connection between private networks</li>
