@@ -15,7 +15,7 @@ def auth_login(user,password):
 		return False
 if __name__ == "__main__":
 	print("==========================================")
-	print("Welcome to 'VPN app configuration' !")
+	print("Demo Telnet Connect to Cisco Router !")
 	print("by Bagas Adi Pamungkas")
 	print("")
 	target_telnet = str(raw_input("Enter Target Telnet IP (example 10.10.1.1): "))
