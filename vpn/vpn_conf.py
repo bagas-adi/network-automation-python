@@ -3,7 +3,7 @@ import sys
 import telnetlib
 import os
 os.system("stty erase '^H'")
-
+# os.system("stty erase '^?'") # some terminals send this for backspace key
 def crypto_isakmp(ip_dst,nama_key="vpnxyz",nama_network="jkt-sby",nama_crypto_map="vpn-ngn"):
 	tn.write("conf t\n") #configuration mode
 	tn.write("crypto isakmp policy 1\n")
